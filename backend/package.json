@@ -1,0 +1,38 @@
+{
+  "name": "mern-backend",
+  "version": "1.0.0",
+  "description": "MERN backend application with Express, MongoDB and Nodemailer",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "mern",
+    "express",
+    "mongodb",
+    "mongoose",
+    "nodemailer"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.20.0",
+    "bcryptjs": "^3.0.3",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "express-handlebars": "^8.0.3",
+    "handlebars": "^4.7.10",
+    "jsonwebtoken": "^9.0.3",
+    "mongoose": "^9.7.4",
+    "nodemailer": "^9.0.3",
+    "nodemailer-express-handlebars": "^7.0.0",
+    "resend": "^6.33.0",
+    "yup": "^1.7.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.14"
+  }
+}
