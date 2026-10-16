@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
@@ -12,6 +13,8 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+
+const API_URL = "http://localhost:3000/user";
 
 function Signup() {
   const navigate = useNavigate();
@@ -32,21 +35,22 @@ function Signup() {
     try {
       setLoading(true);
 
-      await axios.post("http://localhost:3000/user/register", {
-        username,
-        email,
+      const response = await axios.post(`${API_URL}/register`, {
+        username: username.trim(),
+        email: email.trim(),
         password,
       });
 
       setSuccess(
-        "Account created successfully! Please check your email for verification."
+        response.data?.message ||
+          "Account created successfully! Please check your email for verification."
       );
 
       setUsername("");
       setEmail("");
       setPassword("");
 
-      // Success message dikhao, phir Login par jao.
+      // Login page par tabhi navigate karein jab signup successful ho
       setTimeout(() => {
         navigate("/login", {
           replace: true,
@@ -58,11 +62,18 @@ function Signup() {
         });
       }, 1200);
     } catch (err) {
-      setError(
-        err.response?.data?.message ||
-          err.message ||
-          "Signup failed. Please try again."
-      );
+      if (err.response) {
+        setError(
+          err.response.data?.message ||
+            `Signup failed. Server returned status ${err.response.status}.`
+        );
+      } else if (err.request) {
+        setError(
+          "Backend se connection nahi ho raha. Backend server aur API port check karein."
+        );
+      } else {
+        setError(err.message || "Signup failed. Please try again.");
+      }
     } finally {
       setLoading(false);
     }
@@ -99,10 +110,7 @@ function Signup() {
             )}
 
             {success && (
-              <div
-                className="auth-alert auth-success"
-                role="status"
-              >
+              <div className="auth-alert auth-success" role="status">
                 {success}
               </div>
             )}
@@ -154,7 +162,7 @@ function Signup() {
                 <button
                   type="button"
                   className="password-toggle"
-                  onClick={() => setShowPassword(!showPassword)}
+                  onClick={() => setShowPassword((prev) => !prev)}
                   aria-label={
                     showPassword ? "Hide password" : "Show password"
                   }

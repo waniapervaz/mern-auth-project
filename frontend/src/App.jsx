@@ -6,7 +6,7 @@ import Index from "./Index";
 import Signup from "./Signup";
 import Login from "./Login";
 import ForgotPassword from "./ForgotPassword";
-import VerifyOtp from "./VerifyOtp";
+import VerifyOtp from "./VerfifyOtp";
 import ChangePassword from "./ChangePassword";
 
 function App() {
